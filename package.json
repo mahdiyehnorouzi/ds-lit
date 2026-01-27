@@ -1,12 +1,28 @@
 {
-  "name": "@ds/lit",
-  "private": true,
+  "name": "@mahdiyehnorouzi/ds-lit",
+  "version": "0.0.1",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+"exports": {
+  ".": {
+    "import": "./dist/index.js"
+  },
+  "./styles.css": "./dist/ds-lit.css"
+},
+"files": ["dist"],
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
   "scripts": {
-    "dev": "vite",
     "build": "vite build"
+  },
+  "private": false,
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   }
 }
