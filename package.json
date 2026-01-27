@@ -1,6 +1,6 @@
 {
   "name": "@mahdiyehnorouzi/ds-lit",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -8,9 +8,9 @@
     ".": {
       "import": "./dist/index.js"
     },
-  "./styles.css": "./dist/ds-lit.css"
+    "./styles.css": "./dist/ds-lit.css"
   },
-  "files": ["dist"],
+  "files": ["dist/"],
   "peerDependencies": {
     "lit": "^3.0.0"
   },
