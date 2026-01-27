@@ -10,7 +10,7 @@
     },
     "./styles.css": "./dist/ds-lit.css"
   },
-  "files": ["dist/"],
+  "files": ["dist"],
   "peerDependencies": {
     "lit": "^3.0.0"
   },
