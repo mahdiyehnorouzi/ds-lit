@@ -1,13 +1,13 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { tw } from "./../../styles/tw";
+import { tw } from "../../styles/tw";
 import { classMap } from "lit/directives/class-map.js";
 
 type Variant = "primary" | "secondary" | "danger";
 type Size = "sm" | "md" | "lg";
 
-@customElement("ds-button")
-export class DsButton extends LitElement {
+@customElement("lit-button")
+export class LitButton extends LitElement {
   static styles = [tw];
 
   @property({ type: String }) variant: Variant = "primary";
@@ -51,6 +51,6 @@ export class DsButton extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ds-button": DsButton;
+    "lit-button": LitButton;
   }
 }

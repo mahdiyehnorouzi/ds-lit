@@ -1,3 +1,3 @@
-import "./components/ds-button";
-import "./components/ds-input";
-import "./components/ds-modal";
+import "./components/lit-button";
+import "./components/lit-input";
+import "./components/lit-modal";

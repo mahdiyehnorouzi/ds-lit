@@ -577,7 +577,7 @@ M([
   u({ type: Boolean })
 ], A.prototype, "loading", 2);
 A = M([
-  q("ds-button")
+  q("lit-button")
 ], A);
 var Wt = Object.defineProperty, Kt = Object.getOwnPropertyDescriptor, g = (r, t, e, s) => {
   for (var i = s > 1 ? void 0 : s ? Kt(t, e) : t, n = r.length - 1, o; n >= 0; n--)
@@ -590,7 +590,7 @@ let f = class extends I {
   }
   emit(r) {
     this.dispatchEvent(
-      new CustomEvent("ds-input", {
+      new CustomEvent("lit-input", {
         detail: { value: r },
         bubbles: !0,
         composed: !0
@@ -646,7 +646,7 @@ g([
   Ct()
 ], f.prototype, "focused", 2);
 f = g([
-  q("ds-input")
+  q("lit-input")
 ], f);
 var Vt = Object.defineProperty, Zt = Object.getOwnPropertyDescriptor, F = (r, t, e, s) => {
   for (var i = s > 1 ? void 0 : s ? Zt(t, e) : t, n = r.length - 1, o; n >= 0; n--)
@@ -667,7 +667,7 @@ let T = class extends I {
   }
   close() {
     this.open = !1, this.dispatchEvent(
-      new CustomEvent("ds-close", { bubbles: !0, composed: !0 })
+      new CustomEvent("lit-close", { bubbles: !0, composed: !0 })
     );
   }
   render() {
@@ -715,5 +715,5 @@ F([
   u({ type: String })
 ], T.prototype, "title", 2);
 T = F([
-  q("ds-modal")
+  q("lit-modal")
 ], T);

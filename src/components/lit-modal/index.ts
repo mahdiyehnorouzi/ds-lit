@@ -1,9 +1,9 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { tw } from "./../../styles/tw";
+import { tw } from "../../styles/tw";
 
-@customElement("ds-modal")
-export class DsModal extends LitElement {
+@customElement("lit-modal")
+export class LitModal extends LitElement {
   static styles = [tw];
 
   @property({ type: Boolean, reflect: true }) open = false;
@@ -25,7 +25,7 @@ export class DsModal extends LitElement {
   private close() {
     this.open = false;
     this.dispatchEvent(
-      new CustomEvent("ds-close", { bubbles: true, composed: true })
+      new CustomEvent("lit-close", { bubbles: true, composed: true })
     );
   }
 
@@ -71,6 +71,6 @@ export class DsModal extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ds-modal": DsModal;
+    "lit-modal": LitModal;
   }
 }

@@ -1,11 +1,11 @@
 import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { tw } from "./../../styles/tw";
+import { tw } from "../../styles/tw";
 
 type InputState = "default" | "error" | "success";
 
-@customElement("ds-input")
-export class DsInput extends LitElement {
+@customElement("lit-input")
+export class LitInput extends LitElement {
   static styles = [tw];
 
   @property({ type: String }) label = "";
@@ -19,7 +19,7 @@ export class DsInput extends LitElement {
 
   private emit(value: string) {
     this.dispatchEvent(
-      new CustomEvent("ds-input", {
+      new CustomEvent("lit-input", {
         detail: { value },
         bubbles: true,
         composed: true,
@@ -74,6 +74,6 @@ export class DsInput extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ds-input": DsInput;
+    "ds-input": LitInput;
   }
 }
