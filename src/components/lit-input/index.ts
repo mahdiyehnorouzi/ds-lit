@@ -74,6 +74,6 @@ export class LitInput extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "ds-input": LitInput;
+    "lit-input": LitInput;
   }
 }

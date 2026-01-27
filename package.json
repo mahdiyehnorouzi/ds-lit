@@ -1,21 +1,23 @@
 {
   "name": "@mahdiyehnorouzi/ds-lit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
-"exports": {
-  ".": {
-    "import": "./dist/index.js"
-  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
   "./styles.css": "./dist/ds-lit.css"
-},
-"files": ["dist"],
+  },
+  "files": ["dist"],
   "peerDependencies": {
     "lit": "^3.0.0"
   },
   "scripts": {
-    "build": "vite build"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "private": false,
   "types": "dist/index.d.ts",

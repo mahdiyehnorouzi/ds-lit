@@ -12,15 +12,15 @@
 
   <body>
     <script type="module" src="/src/ds.ts"></script>
-    <ds-input
-    label="Email"
-    placeholder="you@example.com"
-    helper-text="We won't spam you"
-  ></ds-input>
+    <lit-input
+      label="Email"
+      placeholder="you@example.com"
+      helper-text="We won't spam you"
+    ></lit-input>
   
-  <ds-button id="openModal">Open modal</ds-button>
+    <lit-button id="openModal">Open modal</ds-button>
   
-  <ds-modal id="m" title="Hello"></ds-modal>
+    <lit-modal id="m" title="Hello"></ds-modal>
   
   <script type="module">
     const btn = document.getElementById("openModal");
@@ -29,7 +29,6 @@
     btn.addEventListener("click", () => (modal.open = true));
     modal.addEventListener("ds-close", () => (modal.open = false));
   
-    // input event
     document.querySelector("ds-input")
       ?.addEventListener("ds-input", (e) => console.log("value:", e.detail.value));
   </script>
