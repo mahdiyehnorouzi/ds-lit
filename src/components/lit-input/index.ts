@@ -1,5 +1,5 @@
 import { LitElement, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { tw } from "../../styles/tw";
 
 type InputState = "default" | "error" | "success";
@@ -14,8 +14,6 @@ export class LitInput extends LitElement {
   @property({ type: Boolean }) disabled = false;
   @property({ type: String }) state: InputState = "default";
   @property({ type: String }) helperText = "";
-
-  @state() private focused = false;
 
   private emit(value: string) {
     this.dispatchEvent(
