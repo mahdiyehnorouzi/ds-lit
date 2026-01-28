@@ -25,6 +25,14 @@ export class LitInput extends LitElement {
     );
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    console.log("lit-button connected", this);
+  }
+  firstUpdated() {
+    console.log("lit-button firstUpdated", this.shadowRoot?.innerHTML);
+  }
+
   render() {
     const ring =
       this.state === "error"
