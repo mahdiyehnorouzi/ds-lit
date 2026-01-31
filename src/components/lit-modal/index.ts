@@ -69,7 +69,6 @@ export class LitModal extends LitElement {
 
   updated(changed: Map<string, unknown>) {
     if (changed.has("open") && this.open) {
-      // وقتی باز می‌شه فوکوس بگیر تا keydown کار کنه
       queueMicrotask(() => this.renderRoot.querySelector<HTMLElement>("[tabindex='0']")?.focus());
     }
   }

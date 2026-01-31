@@ -1,6 +1,6 @@
 {
   "name": "@mahdiyehnorouzi/ds-lit",
-  "version": "0.0.6",
+  "version": "0.0.16",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -17,8 +17,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "prepare": "pnpm -C . build"
+    "preview": "vite preview"
   },
   "private": false,
   "types": "dist/index.d.ts",
