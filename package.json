@@ -1,14 +1,17 @@
 {
   "name": "@mahdiyehnorouzi/ds-lit",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": "./dist/ds-lit.css"
+    "./styles.css": {
+       "default": "./dist/ds-lit.css"
+    }
   },
   "files": ["dist"],
   "peerDependencies": {
