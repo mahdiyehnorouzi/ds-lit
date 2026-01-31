@@ -4,14 +4,15 @@ export function emit<K extends keyof LitEventMap>(
   target: EventTarget,
   type: K,
   detail: LitEventMap[K],
-  init?: Omit<CustomEventInit, "detail">
+  init?: Omit<CustomEventInit, "detail"> | null
 ) {
   const event = new CustomEvent(String(type), {
     detail,
     bubbles: true,
     composed: true,
-    ...init,
+    ...(init ?? {}),
   });
   target.dispatchEvent(event);
   return event;
 }
+
