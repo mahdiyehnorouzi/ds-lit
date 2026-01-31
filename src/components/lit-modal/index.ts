@@ -1,6 +1,9 @@
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { tw } from "../../styles/tw";
+import { emit } from "../../shared/events";
+import { onEscape } from "../../shared/keyboards";
+import { eventOptions } from "lit/decorators/event-options.js";
 
 @customElement("lit-modal")
 export class LitModal extends LitElement {
@@ -9,25 +12,17 @@ export class LitModal extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
   @property({ type: String }) title = "";
 
-  connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener("keydown", this.onKeyDown);
-  }
-  disconnectedCallback() {
-    window.removeEventListener("keydown", this.onKeyDown);
-    super.disconnectedCallback();
-  }
-
-  private onKeyDown = (e: KeyboardEvent) => {
-    if (this.open && e.key === "Escape") this.close();
-  };
-
-  private close() {
+  private close(reason: "backdrop" | "button" | "escape") {
     this.open = false;
-    this.dispatchEvent(
-      new CustomEvent("lit-close", { bubbles: true, composed: true })
-    );
+    emit(this, "lit-modal:close", { reason });
   }
+
+  private onEsc = onEscape(() => {
+    if (this.open) this.close("escape");
+  });
+
+  @eventOptions({ capture: true })
+  private onKeyDown = (e: KeyboardEvent) => this.onEsc(e);
 
   render() {
     if (!this.open) return html``;
@@ -37,10 +32,12 @@ export class LitModal extends LitElement {
         class="fixed inset-0 z-50 flex items-center justify-center p-4"
         aria-modal="true"
         role="dialog"
+        tabindex="0"
+        @keydown=${this.onKeyDown}
       >
         <button
           class="absolute inset-0 bg-black/40"
-          @click=${this.close}
+          @click=${() => this.close("backdrop")}
           aria-label="Close backdrop"
         ></button>
 
@@ -49,7 +46,7 @@ export class LitModal extends LitElement {
             <h2 class="text-base font-semibold text-zinc-900">${this.title}</h2>
             <button
               class="rounded-lg px-2 py-1 text-sm text-zinc-600 hover:bg-zinc-100"
-              @click=${this.close}
+              @click=${() => this.close("button")}
             >
               ✕
             </button>
@@ -60,12 +57,21 @@ export class LitModal extends LitElement {
           </div>
 
           <div class="mt-4 flex justify-end gap-2">
-            <ds-button variant="secondary" @click=${this.close}>Cancel</ds-button>
-            <ds-button>OK</ds-button>
+            <lit-button variant="secondary" @click=${() => this.close("button")}
+              >Cancel</lit-button
+            >
+            <lit-button @click=${() => this.close("button")}>OK</lit-button>
           </div>
         </div>
       </div>
     `;
+  }
+
+  updated(changed: Map<string, unknown>) {
+    if (changed.has("open") && this.open) {
+      // وقتی باز می‌شه فوکوس بگیر تا keydown کار کنه
+      queueMicrotask(() => this.renderRoot.querySelector<HTMLElement>("[tabindex='0']")?.focus());
+    }
   }
 }
 

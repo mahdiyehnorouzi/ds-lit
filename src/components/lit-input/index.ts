@@ -1,8 +1,20 @@
 import { LitElement, html } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { tw } from "../../styles/tw";
+import type { InputState } from "../../shared/types";
+import { emit } from "../../shared/events";
 
-type InputState = "default" | "error" | "success";
+const RING_CLASS: Record<InputState, string> = {
+  error: "focus:ring-red-300 border-red-300",
+  success: "focus:ring-emerald-300 border-emerald-300",
+  default: "focus:ring-zinc-300 border-zinc-200",
+};
+
+const HELPER_COLOR: Record<InputState, string> = {
+  error: "text-red-600",
+  success: "text-emerald-600",
+  default: "text-zinc-500",
+};
 
 @customElement("lit-input")
 export class LitInput extends LitElement {
@@ -15,32 +27,15 @@ export class LitInput extends LitElement {
   @property({ type: String }) state: InputState = "default";
   @property({ type: String }) helperText = "";
 
-  @state() private focused = false;
-
-  private emit(value: string) {
-    this.dispatchEvent(
-      new CustomEvent("lit-input", {
-        detail: { value },
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
+  private onInput = (e: Event) => {
+    const v = (e.target as HTMLInputElement).value;
+    this.value = v;
+    emit(this, "lit-input:change", { value: v });
+  };
 
   render() {
-    const ring =
-      this.state === "error"
-        ? "focus:ring-red-300 border-red-300"
-        : this.state === "success"
-        ? "focus:ring-emerald-300 border-emerald-300"
-        : "focus:ring-zinc-300 border-zinc-200";
-
-    const helperColor =
-      this.state === "error"
-        ? "text-red-600"
-        : this.state === "success"
-        ? "text-emerald-600"
-        : "text-zinc-500";
+    const ring = RING_CLASS[this.state];
+    const helperColor = HELPER_COLOR[this.state];
 
     return html`
       <label class="block">
@@ -55,11 +50,7 @@ export class LitInput extends LitElement {
           .value=${this.value}
           ?disabled=${this.disabled}
           placeholder=${this.placeholder}
-          @input=${(e: Event) => {
-            const v = (e.target as HTMLInputElement).value;
-            this.value = v;
-            this.emit(v);
-          }}
+          @input=${this.onInput}
         />
 
         ${this.helperText
