@@ -9,6 +9,7 @@ export default defineConfig({
       formats: ["es"],
       fileName: () => "index.js",
     },
+    cssCodeSplit: false,
     rollupOptions: {
       external: ["lit"],
     },
