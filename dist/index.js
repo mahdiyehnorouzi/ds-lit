@@ -717,21 +717,3 @@ J([
 O = J([
   q("lit-modal")
 ], O);
-function Qt(r, t, e, i) {
-  const o = new CustomEvent(String(t), {
-    detail: e,
-    bubbles: !0,
-    composed: !0,
-    ...i ?? {}
-  });
-  return r.dispatchEvent(o), o;
-}
-function Xt(r) {
-  return (t) => {
-    t.key === "Escape" && r(t);
-  };
-}
-export {
-  Qt as emit,
-  Xt as onEscape
-};
