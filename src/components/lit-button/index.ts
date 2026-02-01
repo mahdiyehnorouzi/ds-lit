@@ -1,57 +1,115 @@
+// import { LitElement, html } from "lit";
+// import { customElement, property } from "lit/decorators.js";
+// import { classMap } from "lit/directives/class-map.js";
+// import { tw } from "../../styles/tw";
+// import type { ButtonSize, ButtonVariant } from "../../shared/types";
+// import { emit } from "../../shared/events";
+
+// const BASE_BUTTON_CLASS =
+//   "inline-flex items-center justify-center rounded-xl font-medium transition select-none focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+
+// const SIZE_CLASS: Record<ButtonSize, string> = {
+//   sm: "h-8 px-3 text-sm",
+//   md: "h-10 px-4 text-sm",
+//   lg: "h-12 px-5 text-base",
+// };
+
+// const VARIANT_CLASS: Record<ButtonVariant, string> = {
+//   primary: "bg-black text-white hover:bg-zinc-800 focus:ring-zinc-400",
+//   secondary:
+//     "bg-white text-black border border-zinc-200 hover:bg-zinc-50 focus:ring-zinc-300",
+//   danger: "bg-red-600 text-white hover:bg-red-500 focus:ring-red-300",
+// };
+
+// @customElement("lit-button")
+// export class LitButton extends LitElement {
+//   static styles = [tw];
+
+//   @property({ type: String }) variant: ButtonVariant = "primary";
+//   @property({ type: String }) size: ButtonSize = "md";
+//   @property({ type: Boolean, reflect: true }) disabled = false;
+//   @property({ type: Boolean }) loading = false;
+
+//   private onClick = () => {
+//     if (this.disabled || this.loading) return;
+//     emit(this, "lit-button:click", { variant: this.variant, size: this.size });
+//   };
+
+//   render() {
+//     const classes = classMap({
+//       [BASE_BUTTON_CLASS]: true,
+//       [SIZE_CLASS[this.size]]: true,
+//       [VARIANT_CLASS[this.variant]]: true,
+//     });
+
+//     return html`
+//       <button
+//         class=${classes}
+//         ?disabled=${this.disabled || this.loading}
+//         @click=${this.onClick}
+//       >
+//         ${this.loading
+//           ? html`<span
+//               class="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+//             ></span>`
+//           : null}
+//         <slot></slot>
+//       </button>
+//     `;
+//   }
+// }
+
+// declare global {
+//   interface HTMLElementTagNameMap {
+//     "lit-button": LitButton;
+//   }
+// }
+
+
 import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
 import { tw } from "../../styles/tw";
-import type { ButtonSize, ButtonVariant } from "../../shared/types";
-import { emit } from "../../shared/events";
+import { classMap } from "lit/directives/class-map.js";
 
-const BASE_BUTTON_CLASS =
-  "inline-flex items-center justify-center rounded-xl font-medium transition select-none focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
-
-const SIZE_CLASS: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-sm",
-  md: "h-10 px-4 text-sm",
-  lg: "h-12 px-5 text-base",
-};
-
-const VARIANT_CLASS: Record<ButtonVariant, string> = {
-  primary: "bg-black text-white hover:bg-zinc-800 focus:ring-zinc-400",
-  secondary:
-    "bg-white text-black border border-zinc-200 hover:bg-zinc-50 focus:ring-zinc-300",
-  danger: "bg-red-600 text-white hover:bg-red-500 focus:ring-red-300",
-};
+type Variant = "primary" | "secondary" | "danger";
+type Size = "sm" | "md" | "lg";
 
 @customElement("lit-button")
 export class LitButton extends LitElement {
   static styles = [tw];
 
-  @property({ type: String }) variant: ButtonVariant = "primary";
-  @property({ type: String }) size: ButtonSize = "md";
+  @property({ type: String }) variant: Variant = "primary";
+  @property({ type: String }) size: Size = "md";
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean }) loading = false;
 
-  private onClick = () => {
-    if (this.disabled || this.loading) return;
-    emit(this, "lit-button:click", { variant: this.variant, size: this.size });
-  };
+  private base =
+    "inline-flex items-center justify-center rounded-xl font-medium transition select-none focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
 
   render() {
+    const sizeCls: Record<Size, string> = {
+      sm: "h-8 px-3 text-sm",
+      md: "h-10 px-4 text-sm",
+      lg: "h-12 px-5 text-base",
+    };
+
+    const variantCls: Record<Variant, string> = {
+      primary: "bg-black text-white hover:bg-zinc-800 focus:ring-zinc-400",
+      secondary:
+        "bg-white text-black border border-zinc-200 hover:bg-zinc-50 focus:ring-zinc-300",
+      danger: "bg-red-600 text-white hover:bg-red-500 focus:ring-red-300",
+    };
+
     const classes = classMap({
-      [BASE_BUTTON_CLASS]: true,
-      [SIZE_CLASS[this.size]]: true,
-      [VARIANT_CLASS[this.variant]]: true,
+      [this.base]: true,
+      [sizeCls[this.size]]: true,
+      [variantCls[this.variant]]: true,
     });
 
     return html`
-      <button
-        class=${classes}
-        ?disabled=${this.disabled || this.loading}
-        @click=${this.onClick}
-      >
+      <button class=${classes} ?disabled=${this.disabled || this.loading}>
         ${this.loading
-          ? html`<span
-              class="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
-            ></span>`
+          ? html`<span class="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"></span>`
           : null}
         <slot></slot>
       </button>
