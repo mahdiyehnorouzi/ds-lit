@@ -1,6 +1,6 @@
 {
   "name": "@mahdiyehnorouzi/ds-lit",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "type": "module",
 
   "files": ["dist"],
@@ -14,9 +14,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": {
-      "default": "./dist/ds-lit.css"
-    },
+    "./styles.css": "./dist/ds-lit.css",
     "./dist/*": {
       "default": "./dist/*"
     }
