@@ -1,6 +1,6 @@
 {
   "name": "@mahdiyehnorouzi/ds-lit",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "type": "module",
 
   "files": ["dist"],
@@ -30,6 +30,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "prepare": "vite build",
     "clean": "rm -rf dist"
   },
 
