@@ -6,31 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>lit-test</title>
     <link rel="stylesheet" href="./src/index.css" />
-    <script type="module" src="/src/my-element.ts"></script>
   </head>
-
 
   <body>
     <script type="module" src="/src/ds.ts"></script>
+
     <lit-input
       label="Email"
       placeholder="you@example.com"
       helper-text="We won't spam you"
     ></lit-input>
-  
-    <lit-button id="openModal">Open modal</ds-button>
-  
-    <lit-modal id="m" title="Hello"></ds-modal>
-  
-  <script type="module">
-    const btn = document.getElementById("openModal");
-    const modal = document.getElementById("m");
-  
-    btn.addEventListener("click", () => (modal.open = true));
-    modal.addEventListener("ds-close", () => (modal.open = false));
-  
-    document.querySelector("ds-input")
-      ?.addEventListener("ds-input", (e) => console.log("value:", e.detail.value));
-  </script>
+
+    <lit-button id="openModal">Open modal</lit-button>
+
+    <lit-modal id="m" title="Hello"></lit-modal>
+
+    <script type="module">
+      const btn = document.getElementById("openModal");
+      const modal = document.getElementById("m");
+
+      const m = /** @type {any} */ (modal);
+
+      btn?.addEventListener("click", () => {
+        if (m) m.open = true;
+      });
+
+      modal?.addEventListener("lit-modal:close", () => {
+        if (m) m.open = false;
+      });
+
+      document.querySelector("lit-input")
+        ?.addEventListener("lit-input:change", (e) => {
+          console.log("value:", e.detail?.value);
+        });
+    </script>
   </body>
 </html>
