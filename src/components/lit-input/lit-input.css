@@ -1,0 +1,102 @@
+:host {
+    display: block;
+  }
+  
+  /* label */
+  .label {
+    display: block;
+  }
+  
+  .label-text {
+    margin-bottom: 0.25rem;
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--stc-fg);
+  }
+  
+  /* input base */
+  .input {
+    height: 2.5rem;
+    width: 100%;
+    border-radius: 0.75rem;
+  
+    background: var(--stc-input-bg);
+    color: var(--stc-input-fg);
+    border: 1px solid var(--stc-input-border);
+  
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+  
+    outline: none;
+  
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease,
+      background-color 150ms ease;
+  }
+  
+  .input::placeholder {
+    color: color-mix(in srgb, var(--stc-input-fg) 45%, transparent);
+  }
+  
+  /* focus states */
+  .input:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--stc-surface),
+      0 0 0 4px color-mix(in srgb, var(--stc-primary) 40%, transparent);
+  }
+  
+  /* disabled */
+  .input:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background: color-mix(in srgb, var(--stc-surface) 92%, var(--stc-border));
+  }
+  
+  /* state variants */
+  .input.state-default {
+    border-color: var(--stc-border);
+  }
+  
+  .input.state-error {
+    border-color: var(--stc-danger, #dc2626);
+  }
+  
+  .input.state-error:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--stc-surface),
+      0 0 0 4px
+        color-mix(in srgb, var(--stc-danger, #dc2626) 40%, transparent);
+  }
+  
+  .input.state-success {
+    border-color: var(--stc-success, #16a34a);
+  }
+  
+  .input.state-success:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--stc-surface),
+      0 0 0 4px
+        color-mix(in srgb, var(--stc-success, #16a34a) 40%, transparent);
+  }
+  
+  /* helper text */
+  .helper {
+    margin-top: 0.25rem;
+    display: block;
+    font-size: 0.75rem;
+  }
+  
+  .helper.default {
+    color: var(--stc-muted);
+  }
+  
+  .helper.error {
+    color: var(--stc-danger, #dc2626);
+  }
+  
+  .helper.success {
+    color: var(--stc-success, #16a34a);
+  }
+  
