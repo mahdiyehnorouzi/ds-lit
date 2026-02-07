@@ -11,7 +11,14 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     rollupOptions: {
-      external: ["lit"],
+      external: [
+        "lit",
+        "lit/*",
+        "lit-html",
+        "lit-html/*",
+        "@lit/reactive-element",
+        "@lit/reactive-element/*",
+      ],
     },
   },
 });
