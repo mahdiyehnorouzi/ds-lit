@@ -1,4 +1,4 @@
-import "./index.css";
+import "./styles/index.css";
 import "./components/lit-button";
 import "./components/lit-input";
 import "./components/lit-modal";
