@@ -5,17 +5,7 @@ import { unsafeCSS } from "lit";
 
 import styles from "./lit-input.css?inline";
 
-const RING_CLASS: Record<InputState, string> = {
-  error: "focus:ring-red-300 border-red-300",
-  success: "focus:ring-emerald-300 border-emerald-300",
-  default: "focus:ring-zinc-300 border-zinc-200",
-};
-
-const HELPER_COLOR: Record<InputState, string> = {
-  error: "text-red-600",
-  success: "text-emerald-600",
-  default: "text-zinc-500",
-};
+type InputState = "default" | "error" | "success";
 
 @customElement("lit-input")
 export class LitInput extends LitElement {
@@ -60,7 +50,11 @@ export class LitInput extends LitElement {
           .value=${this.value}
           ?disabled=${this.disabled}
           placeholder=${this.placeholder}
-          @input=${this.onInput}
+          @input=${(e: Event) => {
+            const v = (e.target as HTMLInputElement).value;
+            this.value = v;
+            this.emit(v);
+          }}
         />
 
         ${this.helperText
