@@ -5,12 +5,13 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>lit-test</title>
-    <link rel="stylesheet" href="./src/index.css" />
+
+    <!-- ✅ Global styles (theme + globals + tailwind) -->
+    <link rel="stylesheet" href="/src/styles/index.css" />
   </head>
 
   <body>
-    <script type="module" src="/src/ds.ts"></script>
-
+    <!-- demo components -->
     <lit-input
       label="Email"
       placeholder="you@example.com"
@@ -18,27 +19,43 @@
     ></lit-input>
 
     <lit-button id="openModal">Open modal</lit-button>
-
     <lit-modal id="m" title="Hello"></lit-modal>
 
+    <!-- simple theme toggle (plain HTML button) -->
+    <button id="toggleTheme">Toggle theme</button>
+
+    <!-- ✅ App / components bootstrap -->
+    <script type="module" src="/src/ds.ts"></script>
+
+    <!-- ✅ Theme logic + wiring -->
     <script type="module">
+      import { initTheme, toggleTheme } from "./theme.ts";
+
+      // init theme on load
+      initTheme();
+
+      // modal logic
       const btn = document.getElementById("openModal");
       const modal = document.getElementById("m");
 
-      const m = /** @type {any} */ (modal);
-
       btn?.addEventListener("click", () => {
-        if (m) m.open = true;
+        modal.open = true;
       });
 
       modal?.addEventListener("lit-modal:close", () => {
-        if (m) m.open = false;
+        modal.open = false;
       });
 
-      document.querySelector("lit-input")
+      document
+        .querySelector("lit-input")
         ?.addEventListener("lit-input:change", (e) => {
           console.log("value:", e.detail?.value);
         });
+
+      // theme toggle
+      document
+        .getElementById("toggleTheme")
+        ?.addEventListener("click", toggleTheme);
     </script>
   </body>
 </html>

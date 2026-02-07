@@ -1,0 +1,8 @@
+html,
+body {
+    background: var(--stc-bg);
+    color: var(--stc-fg);
+    transition: background-color 200ms ease, color 200ms ease;
+}
+  
+* { box-sizing: border-box; }

@@ -1,8 +1,9 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { tw } from "../../styles/tw";
-import type { InputState } from "../../shared/types";
-import { emit } from "../../shared/events";
+import { classMap } from "lit/directives/class-map.js";
+import { unsafeCSS } from "lit";
+
+import styles from "./lit-input.css?inline";
 
 const RING_CLASS: Record<InputState, string> = {
   error: "focus:ring-red-300 border-red-300",
@@ -18,7 +19,7 @@ const HELPER_COLOR: Record<InputState, string> = {
 
 @customElement("lit-input")
 export class LitInput extends LitElement {
-  static styles = [tw];
+  static styles = css`${unsafeCSS(styles)}`;
 
   @property({ type: String }) label = "";
   @property({ type: String }) placeholder = "";
@@ -27,26 +28,35 @@ export class LitInput extends LitElement {
   @property({ type: String }) state: InputState = "default";
   @property({ type: String }) helperText = "";
 
-  private onInput = (e: Event) => {
-    const v = (e.target as HTMLInputElement).value;
-    this.value = v;
-    emit(this, "lit-input:change", { value: v });
-  };
+  private emit(value: string) {
+    this.dispatchEvent(
+      new CustomEvent("lit-input", {
+        detail: { value },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
 
   render() {
-    const ring = RING_CLASS[this.state];
-    const helperColor = HELPER_COLOR[this.state];
+    const inputClasses = classMap({
+      input: true,
+      [`state-${this.state}`]: true,
+    });
+
+    const helperClasses = classMap({
+      helper: true,
+      [this.state]: true,
+    });
 
     return html`
-      <label class="block">
+      <label class="label">
         ${this.label
-          ? html`<span class="mb-1 block text-sm font-medium text-zinc-800"
-              >${this.label}</span
-            >`
+          ? html`<span class="label-text">${this.label}</span>`
           : null}
 
         <input
-          class="h-10 w-full rounded-xl border bg-white px-3 text-sm outline-none transition disabled:cursor-not-allowed disabled:bg-zinc-50 ${ring}"
+          class=${inputClasses}
           .value=${this.value}
           ?disabled=${this.disabled}
           placeholder=${this.placeholder}
@@ -54,9 +64,7 @@ export class LitInput extends LitElement {
         />
 
         ${this.helperText
-          ? html`<span class="mt-1 block text-xs ${helperColor}"
-              >${this.helperText}</span
-            >`
+          ? html`<span class=${helperClasses}>${this.helperText}</span>`
           : null}
       </label>
     `;
@@ -68,84 +76,3 @@ declare global {
     "lit-input": LitInput;
   }
 }
-
-
-// import { LitElement, html } from "lit";
-// import { customElement, property, state } from "lit/decorators.js";
-// import { tw } from "../../styles/tw";
-
-// type InputState = "default" | "error" | "success";
-
-// @customElement("lit-input")
-// export class LitInput extends LitElement {
-//   static styles = [tw];
-
-//   @property({ type: String }) label = "";
-//   @property({ type: String }) placeholder = "";
-//   @property({ type: String }) value = "";
-//   @property({ type: Boolean }) disabled = false;
-//   @property({ type: String }) state: InputState = "default";
-//   @property({ type: String }) helperText = "";
-
-//   @state() private focused = false;
-
-//   private emit(value: string) {
-//     this.dispatchEvent(
-//       new CustomEvent("lit-input", {
-//         detail: { value },
-//         bubbles: true,
-//         composed: true,
-//       })
-//     );
-//   }
-
-//   render() {
-//     const ring =
-//       this.state === "error"
-//         ? "focus:ring-red-300 border-red-300"
-//         : this.state === "success"
-//         ? "focus:ring-emerald-300 border-emerald-300"
-//         : "focus:ring-zinc-300 border-zinc-200";
-
-//     const helperColor =
-//       this.state === "error"
-//         ? "text-red-600"
-//         : this.state === "success"
-//         ? "text-emerald-600"
-//         : "text-zinc-500";
-
-//     return html`
-//       <label class="block">
-//         ${this.label
-//           ? html`<span class="mb-1 block text-sm font-medium text-zinc-800"
-//               >${this.label}</span
-//             >`
-//           : null}
-
-//         <input
-//           class="h-10 w-full rounded-xl border bg-white px-3 text-sm outline-none transition disabled:cursor-not-allowed disabled:bg-zinc-50 ${ring}"
-//           .value=${this.value}
-//           ?disabled=${this.disabled}
-//           placeholder=${this.placeholder}
-//           @input=${(e: Event) => {
-//             const v = (e.target as HTMLInputElement).value;
-//             this.value = v;
-//             this.emit(v);
-//           }}
-//         />
-
-//         ${this.helperText
-//           ? html`<span class="mt-1 block text-xs ${helperColor}"
-//               >${this.helperText}</span
-//             >`
-//           : null}
-//       </label>
-//     `;
-//   }
-// }
-
-// declare global {
-//   interface HTMLElementTagNameMap {
-//     "lit-input": LitInput;
-//   }
-// }
